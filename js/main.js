@@ -38,10 +38,7 @@ const getToDoList = () => {
   toDoListService
     .getToDoListApi()
     .then((result) => {
-      console.log(result.data);
       filterTasks(result.data);
-      console.log(uncompletedTaskArr);
-      console.log(completedTaskArr);
       renderHTML(uncompletedTaskArr, "todo");
       renderHTML(completedTaskArr, "completed");
     })
@@ -62,6 +59,7 @@ getEle("addItem").addEventListener("click", () => {
     .addToDoListApi(task)
     .then((result) => {
       getToDoList();
+      getEle("newTask").value = "";
     })
     .catch((error) => {
       console.log(error);
