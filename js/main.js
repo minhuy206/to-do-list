@@ -1,6 +1,30 @@
 import Task from "./Task.js";
 import ToDoListService from "./ToDoListService.js";
 const toDoListService = new ToDoListService();
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const today = new Date();
+
+const year = today.getFullYear();
+const date = today.getDate();
+const month = today.getMonth();
+
+document.getElementsByClassName(
+  "card__today"
+)[0].innerHTML = `${months[month]} ${date}, ${year}`;
 
 const getEle = (id) => document.getElementById(id);
 let uncompletedTaskArr = [];
@@ -52,18 +76,21 @@ getToDoList();
 // Thêm task
 getEle("addItem").addEventListener("click", () => {
   let newTask = getEle("newTask").value;
+  if (newTask) {
+    const task = new Task("", newTask, "uncompleted");
 
-  const task = new Task("", newTask, "uncompleted");
-
-  toDoListService
-    .addToDoListApi(task)
-    .then((result) => {
-      getToDoList();
-      getEle("newTask").value = "";
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    toDoListService
+      .addToDoListApi(task)
+      .then((result) => {
+        getToDoList();
+        getEle("newTask").value = "";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } else {
+    alert("Please enter activity!");
+  }
 });
 
 // Xoá task
