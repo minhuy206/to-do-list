@@ -48,7 +48,7 @@ const renderHTML = (data, id) => {
         <button class="remove" onclick="deleteTask(${task.id})">
             <i class="fa-solid fa-trash-can"></i>
         </button>
-        <button class="complete" onclick="changeStateToDoList(${task.id}, '${task.task}')">
+        <button class="complete" onclick="changeStateToDoList(${task.id}, '${task.task}', '${task.state}')">
             <i class="fa-regular fa-circle-check fas far"></i>
         </button>
         </div>
@@ -107,8 +107,12 @@ const deleteTask = (id) => {
 window.deleteTask = deleteTask;
 
 // Note hoan thanh task
-const changeStateToDoList = (id, completedTask) => {
-  const task = new Task(id, completedTask, "completed");
+const changeStateToDoList = (id, completedTask, state) => {
+  const task = new Task(
+    id,
+    completedTask,
+    state === "uncompleted" ? "completed" : "uncompleted"
+  );
   toDoListService
     .changeStateToDoListApi(task)
     .then(() => {
